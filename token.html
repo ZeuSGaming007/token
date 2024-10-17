@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let tokenCount = 0; // Initialize token count
+            const generatedTokens = new Set(); // To store unique tokens
+
+            document.getElementById('generateTokenBtn').addEventListener('click', generateToken);
+
+            function generateToken() {
+                const customerName = document.getElementById('customerName').value;
+
+                if (!customerName) {
+                    alert("Please enter your name.");
+                    return;
+                }
+
+                // Increment token count for each new token
+                tokenCount++;
+                
+                // Create token in the format VA-XXXX
+                const token = `VA-${String(tokenCount).padStart(4, '0')}`;
+                
+                // Ensure the token is unique
+                if (!generatedTokens.has(token)) {
+                    generatedTokens.add(token);
+                    displayToken(token, customerName);
+                } else {
+                    alert("Token already generated. Please try again.");
+                }
+            }
+
+            function displayToken(token, customerName) {
+                // Display the generated token and customer name
+                document.getElementById('tokenDisplay').innerText = `Hello ${customerName}, your Token: ${token}`;
+                document.getElementById('screenshotNote').innerText = "Note: Please take a screenshot of your token.";
+            }
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Customer Token Generator</h1>
+    </header>
+    <main>
+        <div class="container">
+            <form id="customerForm">
+                <label for="customerName">Enter Your Name:</label>
+                <input type="text" id="customerName" required>
+            </form>
+            <button id="generateTokenBtn">Generate Token</button>
+            <div id="tokenDisplay"></div>
+            <div id="screenshotNote" style="margin-top: 10px; font-style: italic; color: red;"></div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Token Generator</p>
+    </footer>
+</body>
+</html>
